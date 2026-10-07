@@ -1,0 +1,12 @@
+<!DOCTYPE html><html><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+:root{--bg:#FFFBF0;--fg:#6b0505;}
+@media (prefers-color-scheme:dark){:root{--bg:#140505;--fg:#f0cf7a;}}
+body{margin:0;height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;background:var(--bg);color:var(--fg);font-family:sans-serif;text-align:center;padding:24px;box-sizing:border-box}
+h2{margin:0 0 8px}p{opacity:.8;margin:0 0 24px}
+button{background:#7a0606;color:#f6d77a;border:2px solid #e3b84f;border-radius:999px;padding:12px 32px;font-size:16px}
+</style></head><body>
+<h2>No connection</h2><p>Please check your internet and try again.</p>
+<button onclick="AsmApp.retry()">Retry</button>
+</body></html>
