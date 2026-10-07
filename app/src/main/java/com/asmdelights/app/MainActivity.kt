@@ -49,7 +49,7 @@ import androidx.core.view.WindowInsetsControllerCompat
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import java.io.File
 
-const val SITE_URL = "https://dried-delights-admin-updated-3.vercel.app/"
+const val SITE_URL = "https://dried-delights-mobile-premium.vercel.app/"
 
 object Notifier {
     private const val CHANNEL = "asm_default"
