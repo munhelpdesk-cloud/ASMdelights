@@ -46,6 +46,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import java.io.File
 
 const val SITE_URL = "https://dried-delights-admin-updated-3.vercel.app/"
@@ -82,6 +83,7 @@ object Notifier {
 class MainActivity : AppCompatActivity() {
 
     private lateinit var webView: WebView
+    private lateinit var refresh: SwipeRefreshLayout
     private var ready = false
 
     private var fileCallback: ValueCallback<Array<Uri>>? = null
@@ -131,7 +133,14 @@ class MainActivity : AppCompatActivity() {
         root.setBackgroundColor(ContextCompat.getColor(this, R.color.app_bg))
         webView = WebView(this)
         webView.setBackgroundColor(ContextCompat.getColor(this, R.color.app_bg))
-        root.addView(webView, ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT))
+        refresh = SwipeRefreshLayout(this).apply {
+            setColorSchemeColors(0xFF6E0A12.toInt(), 0xFFE3B84F.toInt())
+            setProgressBackgroundColorSchemeColor(0xFFFBF3E4.toInt())
+            setOnRefreshListener { webView.reload() }
+            setOnChildScrollUpCallback { _, _ -> webView.scrollY > 0 }
+            addView(webView, ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT))
+        }
+        root.addView(refresh, ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT))
         setContentView(root)
 
         // Keep content above the keyboard while bars are hidden
@@ -214,6 +223,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onPageFinished(view: WebView, url: String?) {
+                refresh.isRefreshing = false
                 injectNotificationPolyfill(view)
                 ready = true
             }
